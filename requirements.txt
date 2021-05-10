@@ -1,2 +1,3 @@
-torch
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==1.8.1+cu111
 https://github.com/finetuneanon/transformers/archive/refs/heads/gpt-neo-dungeon-localattention1.zip
