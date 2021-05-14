@@ -9,12 +9,6 @@ set PythonPathFile=python39._pth
 :: update from https://github.com/microsoft/terminal/releases
 set WindowsTerminalURL=https://github.com/microsoft/terminal/releases/download/v1.7.1091.0/Microsoft.WindowsTerminal_1.7.1091.0_8wekyb3d8bbwe.msixbundle
 
-:: update from https://pytorch.org/get-started/locally/
-set TorchCudaPip=torch==1.8.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
-
-:: Finetuneanon's fork of Transformers
-set TransformersPip=https://github.com/finetuneanon/transformers/archive/refs/heads/gpt-neo-dungeon-localattention1.zip
-
 :: Checking if the user has curl and tar installed
 for %%X in (curl.exe) do (set HasCurl=%%~$PATH:X)
 for %%X in (tar.exe) do (set HasTar=%%~$PATH:X)
@@ -22,6 +16,9 @@ for %%X in (tar.exe) do (set HasTar=%%~$PATH:X)
 
 echo AIDungeon2 Clover Edition installer for Windows 10 64-bit
 echo ----------------------------------------------------------------------------------------------
+echo.
+echo Please disable your anti-virus before continuing the install process.
+echo.
 echo.
 echo Using an Nvidia GPU requires 6 GB HDD space, 16 GB RAM, and at least 6 GB of VRAM on your GPU for GPT-2 or up to 8 GB of VRAM for GPT-Neo.
 echo Using only your CPU requires 2 GB HDD space, 16 GB RAM.
@@ -84,21 +81,17 @@ del get-pip.py
 
 cd ..
 
-:: Install Prompt_Toolkit
-echo Installing Prompt_Toolkit
-%PY% -m pip install prompt_toolkit --no-color --no-warn-script-location
-
-:: Install Transformers
-echo Installing Transformers
-%PY% -m pip install %TransformersPip% --no-color --no-warn-script-location
+:: Install Requirements
+echo Installing universal dependencies
+%PY% -m pip --no-cache-dir install -r requirements/requirements.txt --no-color --no-warn-script-location
 
 :: Install Torch
 echo Installing PyTorch
 if %usecuda%==1 (
-  %PY% -m pip install %TorchCudaPip% --no-color --no-warn-script-location
+  %PY% -m pip install -r requirements/cuda_requirements.txt --no-color --no-warn-script-location
 )
 if %usecuda%==2 (
-  %PY% -m pip install torch --no-color --no-warn-script-location
+  %PY% -m pip install -r requirements/cpu_requirements.txt --no-color --no-warn-script-location
 )
 
 :: Check for and offer to help install Windows Terminal

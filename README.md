@@ -30,30 +30,43 @@ Also take a look at [AIDungeonPastes](https://aidungeonpastes.github.io/AID2-Art
 * Lots of changes to story history sampling/truncation to hopefully stay on track with longer games
 * Eventually hope to improve the AI itself, but this will take some time
 
-## Install Instructions
+## Install instructions
 ------------------------
 
 Officially we only support local installs. We encourage and recommend installing and running the game locally. However since the beginning most people have been playing it for free on Google's servers through their Colab platform. Allegedly it requires no effort to get started. Try [this link](https://colab.research.google.com/drive/1kYVhVeE6z4sUyyKDVxLGrzI4OTV43eEa) and go to the [4chan threads](https://boards.4chan.org/search#/aidungeon%20OR%20%22ai%20dungeon%22) for help and info.
 
 To play with GPU acceleration, you need an Nvidia GPU. (Though some anons claim to have gotten it working with on AMD with ROCm) The original "XL" 1558M parameter model requires at least 4GB of VRAM. Smaller models may consume much less. On CPU, response times vary from about a minute on the XL GPT-2 1558M model, which is slow but usable, to about 6 minutes on GPT-Neo.
 
-After either of the following install steps, you must get one of the models.
+After any of the following install steps, you must get one of the models.
 
 ### Windows 10 install
 
-1. Download this repo. Github has a green download button to the top right that looks like: `[⤓ Code]`. Click it then select "Download Zip". Or you can use the git command `git clone --depth=1 "https://github.com/cloveranon/Clover-Edition/"` if you have git installed.
-2. Run `install.bat` and follow the on-screen instructions.
+1. Download this repo. Github has a green download button to the top right that looks like: `[⤓ Code]`. Click it, select "Download Zip", then unzip it to a folder. Or you can use the git command `git clone --depth=1 "https://github.com/cloveranon/Clover-Edition/"` if you have git installed. 
+2. Go to your Clover Edition folder.
+3. Run `install.bat` and follow the on-screen instructions.
 
-### Manual install
+#### Windows troubleshooting
+
+- Users have reported that some anti-virus (specifically Kaspersky) isn't happy with the install.bat script. Please whitelist or temporarily disable anti-virus when installing.
+- You can partially uninstall by deleting the `venv/` folder, and fully uninstall by just deleting the entire Clover Edition folder.
+
+### Linux install
+
+1. Install [Python](https://www.python.org/downloads/) or use your package manager (e.g. `sudo apt-get install python3` or `sudo yum install python3` or something).
+2. Download this repo. Github has a green download button to the top right that looks like: `[⤓ Code]`. Click it, select "Download Zip", then unzip it to a folder. Or you can use the git command `git clone --depth=1 "https://github.com/cloveranon/Clover-Edition/"` if you have git installed.
+3. Go to your Clover Edition folder.
+4. Run `sh install.sh` and follow the on-screen instructions.
+
+### OS-agnostic manual install
 
 1. Install [Python](https://www.python.org/downloads/). The installer should install `pip` and it should add it to your `PATH` automatically. Make sure you have the relevant options selected if the installer gives you any options.
-2. Install PyTorch (aka the `torch` python module.) PyTorch's installation instructions are available [here](https://pytorch.org/get-started/locally/) on their official website. You do not need the `torchvision` nor the `torchaudio` packages.
-    - For Windows or Linux CUDA (Nvidia GPU support), the command will look like the following: `pip install torch==1.8.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html`
-    - For Windows or Linux with only CPU support, it will look like: `pip install torch==1.8.1+cpu -f https://download.pytorch.org/whl/torch_stable.html`
-    - For MacOS users, you just have to: `pip install torch`, as the binaries don't support CUDA and you probably don't have an Nvidia GPU anyway.
-3. Install finetuneanon's Transformers: `pip install https://github.com/finetuneanon/transformers/archive/refs/heads/gpt-neo-dungeon-localattention1.zip`
-4. If you're playing on your desktop (i.e. not on Google Colab), install Prompt-Toolkit: `pip install prompt_toolkit`
-5. Download this repo. Github has a green download button to the top right that looks like: `[⤓ Code]`. Click it then select "Download Zip". Or you can use the git command `git clone --depth=1 "https://github.com/cloveranon/Clover-Edition/"` if you have git installed.
+2. Download this repo. Github has a green download button to the top right that looks like: `[⤓ Code]`. Click it, select "Download Zip", then unzip it to a folder. Or you can use the git command `git clone --depth=1 "https://github.com/cloveranon/Clover-Edition/"` if you have git installed. 
+3. Open a command line or terminal and go to your Clover Edition folder.
+4. Run: `pip --no-cache-dir install -r requirements/requirements.txt`
+5. Install PyTorch (you must do one of the following):
+    - If you're using an Nvidia GPU with CUDA, run: `pip install -r requirements/cuda_requirements.txt`
+    - If you're planning on just using your CPU, run: `pip install -r requirements/cpu_requirements.txt`
+
 
 ## Models
 
@@ -64,10 +77,10 @@ You can have multiple models installed, but you need at least one.
 | finetuneanon's horni - light novel | GPT-Neo | 2.7 billion | 5 GB | 8 GB | 8 GB | [[mega](https://mega.nz/file/rQcWCTZR#tCx3Ztf_PMe6OtfgI95KweFT5fFTcMm7Nx9Jly_0wpg)] [[gdrive](https://drive.google.com/file/d/1M1JY459RBIgLghtWDRDXlD4Z5DAjjMwg/view?usp=sharing)] [[torrent](https://tinyurl.com/pytorch-gptneo-horni)]  |
 | finetuneanon's horni | GPT-Neo | 2.7 billion | 5 GB | 8 GB | 8 GB | [[mega](https://mega.nz/file/6BNykLJb#B6gxK3TnCKBpeOF1DJMXwaLc_gcTcqMS0Lhzr1SeJmc)] [[gdrive](https://drive.google.com/file/d/1-Jj_hlyNCQxuSnK7FFBXREGnRSMI5MoF/view?usp=sharing)] [[torrent](https://tinyurl.com/pytorch-gptneo-horni)](same as above) |
 | EleutherAI | GPT-Neo | 2.7 billion | 10 GB | 12 GB | 8 GB | [[huggingface](https://huggingface.co/EleutherAI/gpt-neo-2.7B/tree/main)] * |
-| Original AID2 | GPT-2 | 1.56 billion | 6 GB | 12 GB | 5 GB | [[torrent](tinyurl.com/pytorch-gpt2-model)] |
+| Original Clover Edition | GPT-2 | 1.56 billion | 6 GB | 12 GB | 5 GB | [[torrent](tinyurl.com/pytorch-gpt2-model)] |
 | Collection of 4 models | GPT-2 | 774 million | 3 GB ea | 8 GB | 4 GB | [[mega](https://mega.nz/folder/4e5kRCIB#v7q0ItVjhhGcIqfZOZy9yA)] |
 
-\* For EleutherAI's GPT-Neo-2.7B, Download only `pytorch_model.bin` and make sure it's named that, put it into a new folder (see below for the structure), then copy `config.json`, `merges.txt`, and `vocab.json` from one of finetuneanon's models and put them in the same folder.
+\* For EleutherAI's GPT-Neo-2.7B, Download only `pytorch_model.bin` and make sure it's named that, put it into a new folder named `gpt-neo-2.7b` (see below for the structure), then copy `config.json`, `merges.txt`, and `vocab.json` from one of finetuneanon's models and put them in the same folder.
 
 16-Bit models are half the size, and load 20 times faster (probably because they run out of RAM and hit the swap space). I found the original AID2 model (`pytorch-gpt2-xl-aid2-v5`) took 12.6 minutes to load, while the 16 bit version took 37 seconds.
 
@@ -83,8 +96,9 @@ Once downloaded, your model folder should look like this:
 
 ## Playing
 
-- Windows: `play.bat`
-- Linux: `python play.py`
+- Windows: double-click `play.bat`
+- Linux: `sh play.sh`
+- OS-agnostic install: `python launch.py`
 
 
 ## Color support on Windows
@@ -92,17 +106,17 @@ Once downloaded, your model folder should look like this:
 Install [Windows Terminal](https://aka.ms/terminal) (recommended) or [cmder](https://cmder.net/) and use that as your terminal.
 
 
-## Datasets and Fine-tuning the AI
+## Datasets and fine-tuning the AI
 ---------------
 
 I threw together a quick page of some tips [here](DATASETS.md). I plan to throw any links to interesting datasets or guides for training and fine-tuning the AI there. Please send me anything interesting.
 
 Fine-tuning is not currently a push button thing and requires some minimal technical ability. Most people are using the program gpt-simple. You may have more luck with the much more advanced [Huggingface-Transformers](https://github.com/huggingface/transformers) program that we use to power Clover-Edition. [This](https://huggingface.co/transformers/examples.html#language-model-fine-tuning) seems to be their documentation on fine-tuning.
 
-## Converting Tensorflow model to Pytorch
+## Converting Tensorflow model to PyTorch
 ----------------
 
-I have made the [convert_gpt2_model.py](convert_gpt2_model.py) script an idiot proof simple way of quickly converting tensorflow models to pytorch models. Just run it on the folder containing a tensorflow model and you will get a pytorch model. You can use the --full flag to get a full 32bit model, but do try 16bit models as they will be potentially half the size for the same accuracy.
+I have made the [convert_gpt2_model.py](convert_gpt2_model.py) script an idiot proof simple way of quickly converting tensorflow models to PyTorch models. Just run it on the folder containing a tensorflow model and you will get a PyTorch model. You can use the --full flag to get a full 32bit model, but do try 16bit models as they will be potentially half the size for the same accuracy.
 
 See the [test-models.py](test-models.py) script to test the accuracy of 16 bit mode if you doubt the chad 16BIT models. My tests were well within expectations:
 
@@ -124,3 +138,17 @@ Otherwise see:
 Contributions are more than welcome. You can fork the thing and send a  [pull request](https://help.github.com/articles/using-pull-requests/) from your fork.
 
 ![cry.](images/cry.png)
+
+
+## Model magnet links (for reference)
+------------------------
+
+finetuneanon's GPT-Neo-2.7B-horni and horni-ln:
+```
+magnet:?xt=urn:btih:31d956ff4a248dcf914b1b7e474cbac02d70d6a4&dn=gtp-neo-horni
+```
+
+Original AIDungeon2 Clover Edition GPT-2:
+```
+magnet:?xt=urn:btih:17dcfe3d12849db04a3f64070489e6ff5fc6f63f&dn=model_v5_pytorch&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2fopen.stealth.si%3a80%2fannounce&tr=udp%3a%2f%2fp4p.arenabg.com%3a1337%2fannounce&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.cyberia.is%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.moeking.me%3a6969%2fannounce&tr=udp%3a%2f%2f9.rarbg.me%3a2710%2fannounce&tr=udp%3a%2f%2ftracker3.itzmx.com%3a6961%2fannounce
+```
